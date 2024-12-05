@@ -1,3 +1,7 @@
+require("dotenv").config();  // initialisation de dotenv + conf
+require("./Connection");
+
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
