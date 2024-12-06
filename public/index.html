@@ -3,32 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire Connexion/Inscription</title>
-    <link rel="stylesheet" href="./stylesheets/style.css">
+    <title>Inscription et Connexion</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-box">
-            <h1>Bienvenue</h1>
-            <div class="toggle-buttons">
-                <button id="btn-login" class="active">Connexion</button>
-                <button id="btn-register">Inscription</button>
-            </div>
-            <form id="login-form" class="form active">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mot de passe" required>
-                <button type="submit">Se connecter</button>
-            </form>
-            <form id="register-form" class="form">
-                <input type="text" placeholder="Nom complet" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mot de passe" required>
-                <button type="submit">S'inscrire</button>
-            </form>
-        </div>
-    </div>
+    <h1>Inscription</h1>
+    <form id="registerForm">
+        <input type="text" id="registerUsername" placeholder="Nom d'utilisateur" required>
+        <input type="password" id="registerPassword" placeholder="Mot de passe" required>
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <h1>Connexion</h1>
+    <form id="loginForm">
+        <input type="text" id="loginUsername" placeholder="Nom d'utilisateur" required>
+        <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+        <button type="submit">Se connecter</button>
+    </form>
 
     <script src="script.js"></script>
 </body>
 </html>
-
+    
