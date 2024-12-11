@@ -8,20 +8,21 @@
 </head>
 <body>
     <h1>Inscription</h1>
-    <form id="registerForm">
-        <input type="text" id="registerUsername" placeholder="Nom d'utilisateur" required>
-        <input type="password" id="registerPassword" placeholder="Mot de passe" required>
+    <form id="registerForm" action="/users/register" method="POST">
+        <input type="text" name="Name" placeholder="Nom" required>
+        <input type="text" name="Prenom" placeholder="Prénom" required>
+        <input type="email" name="Email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">S'inscrire</button>
     </form>
 
     <h1>Connexion</h1>
-    <form id="loginForm">
-        <input type="text" id="loginUsername" placeholder="Nom d'utilisateur" required>
-        <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+    <form id="loginForm" action="/users/login" method="POST">
+        <input type="email" name="Email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
     </form>
 
     <script src="script.js"></script>
 </body>
 </html>
-    

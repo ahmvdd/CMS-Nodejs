@@ -1,5 +1,6 @@
-require("dotenv").config();  // initialisation de dotenv + conf
+require("dotenv").config();  // initialisation de dotenv + configuration
 require("./Connection");
+const cors = require('cors');
 
 
 var express = require('express');
@@ -9,6 +10,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const articlesRouter = require('./routes/article');
+
+
 
 var app = express();
 
@@ -19,5 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
-app.use('/', indexRouter);
+app.use('/article', articlesRouter);
+
+
 module.exports = app;
