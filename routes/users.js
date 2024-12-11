@@ -77,15 +77,15 @@ router.post('/login', async (req, res) => {
 });
 
 // Route pour récupérer les articles
-router.get('/article', async (req, res) => {
-  try {
-    const [results] = await connection.promise().query("SELECT * FROM article");
-    res.json(results); // Renvoie les articles en JSON
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erreur lors de la récupération des articles." });
-  }
-});
+// router.get('/article', async (req, res) => {
+//   try {
+//     const [results] = await connection.promise().query("SELECT * FROM article");
+//     res.json(results); // Renvoie les articles en JSON
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Erreur lors de la récupération des articles." });
+//   }
+// });
 
 // Exportation des routes
 module.exports = router;
