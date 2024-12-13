@@ -1,6 +1,6 @@
 require("dotenv").config();  // initialisation de dotenv + configuration
 require("./Connection");
-const cors = require('cors'); // Ajout de CORS ici
+const cors = require('cors');
 
 
 var express = require('express');
