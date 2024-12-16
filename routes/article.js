@@ -1,6 +1,7 @@
 const express = require('express');
 const connection = require('../Connection');
 const router = express.Router();
+const {auth} = require ('../middlware/auth')
 
 // La route pour afficher
 
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 
 
   // Route pour ajouter un article
-router.post('/ajouter', async (req, res) => {
+router.post('/ajouter',auth, async (req, res) => {
     const { Title, Content } = req.body;
 
     // Validation des champs
@@ -26,9 +27,10 @@ router.post('/ajouter', async (req, res) => {
 
     try {
         // Insérer un nouvel article dans la base de données
+        console.log(req.user)
         await connection.promise().query(
-            "INSERT INTO article (Titre, Contenu) VALUES (?, ?)",
-            [Title, Content]
+            "INSERT INTO article (Titre, Contenu, id_user) VALUES (?, ?,?)",
+            [Title, Content, req.user.id]
         );
 
         res.status(201).json({ message: "Article ajouté avec succès." });
@@ -39,27 +41,32 @@ router.post('/ajouter', async (req, res) => {
 });
 
 // Route pour supprimer un article par ID
-router.delete('/supprimer/:id', async (req, res) => {
+router.delete('/supprimer/:id',auth, async (req, res) => {
     const { id } = req.params;
 
     try {
         // Vérifier si l'article existe
         const [articles] = await connection.promise().query(
-            "SELECT * FROM article WHERE id = ?",
+            "SELECT * FROM article WHERE Id_article = ?",
             [id]
         );
+
+        console.log (articles)
 
         if (articles.length === 0) {
             return res.status(404).json({ message: "L'article n'a pas été trouvé." });
         }
 
         // Supprimer l'article
-        await connection.promise().query(
-            "DELETE FROM article WHERE id = ?",
-            [id]
-        );
+        if(articles[0].Id_user ===req.user?.id){
 
-        res.json({ message: "L'article a été supprimé avec succès." });
+            await connection.promise().query(
+                "DELETE FROM article WHERE Id_article = ?",
+                [id]
+            );
+            res.json({ message: "L'article a été supprimé avec succès." });
+        }
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Erreur lors de la suppression de l'article." });
