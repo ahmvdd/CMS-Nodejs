@@ -4,40 +4,40 @@ const bcrypt = require('bcryptjs');
 const jwt = require ('jsonwebtoken')
 const connection = require('../Connection'); // Connexion MySQL
 
-// Route d'inscription
 router.post('/register', async (req, res) => {
   const { Name, Prenom, Email, password } = req.body;
 
   if (!Name || !Prenom || !Email || !password) {
-    return res.status(400).json({ message: "Tous les champs sont requis." });
+      return res.status(400).json({ message: "Tous les champs sont requis." });
   }
 
   try {
-    const [results] = await connection.promise().query(
-      "SELECT * FROM user WHERE Email = ?",
-      [Email]
-    );
+      const [results] = await connection.promise().query(
+          "SELECT * FROM user WHERE Email = ?",
+          [Email]
+      );
 
-    if (results.length > 0) {
-      return res.status(400).json({ message: "Cet email est déjà utilisé." });
-    }
+      if (results.length > 0) {
+          return res.status(400).json({ message: "Cet email est déjà utilisé." });
+      }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await connection.promise().query(
-      "INSERT INTO user (Name, Prenom, Email, password) VALUES (?, ?, ?, ?)",
-      [Name, Prenom, Email, hashedPassword]
-    );
+      await connection.promise().query(
+          "INSERT INTO user (Name, Prenom, Email, password) VALUES (?, ?, ?, ?)",
+          [Name, Prenom, Email, hashedPassword]
+      );
 
+      // Génération du token après une inscription réussie
+      const token = jwt.sign({ Email }, 'your_secret_key', { expiresIn: '1h' });
 
-  
-    
-    res.status(201).json({ message: "Inscription réussie.", token });
+      res.status(201).json({ message: "Inscription réussie.", token });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erreur lors de l'inscription." });
+      console.error(err);
+      res.status(500).json({ message: "Erreur lors de l'inscription." });
   }
 });
+
 
 // Route de connexion
 router.post('/login', async (req, res) => {
@@ -88,16 +88,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Route pour récupérer les articles
-// router.get('/article', async (req, res) => {
-//   try {
-//     const [results] = await connection.promise().query("SELECT * FROM article");
-//     res.json(results); // Renvoie les articles en JSON
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Erreur lors de la récupération des articles." });
-//   }
-// });
+
 
 // Exportation des routes
 module.exports = router;

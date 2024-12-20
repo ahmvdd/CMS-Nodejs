@@ -40,6 +40,30 @@ router.post('/ajouter',auth, async (req, res) => {
     }
 });
 
+
+// router.post('/ajouter', auth, async (req, res) => {
+//     const { Title, Content } = req.body;
+
+//     if (!Title || !Content) {
+//         return res.status(400).json({ message: 'Le titre et le contenu sont requis.' });
+//     }
+
+//     try {
+//         console.log('Utilisateur connecté:', req.user); // Vérifiez ici si req.user contient les bonnes données
+
+//         await connection.promise().query(
+//             'INSERT INTO article (Titre, Contenu, id_user) VALUES (?, ?, ?)',
+//             [Title, Content, req.user.id]
+//         );
+
+//         res.status(201).json({ message: 'Article ajouté avec succès.' });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: 'Erreur lors de l\'ajout de l\'article.' });
+//     }
+// });
+
+
 // Route pour supprimer un article par ID
 router.delete('/supprimer/:id',auth, async (req, res) => {
     const { id } = req.params;
